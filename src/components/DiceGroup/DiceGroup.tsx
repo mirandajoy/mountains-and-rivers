@@ -8,13 +8,20 @@ interface DiceResults {
   total: number | null;
 }
 
-function DiceGroup() {
+function DiceGroup({
+  movePiece,
+  activePlayer,
+}: {
+  movePiece: (distance: number, player: number) => void;
+  activePlayer: number;
+}) {
   const [diceResult, setDiceResult] = useState<DiceResults>({ dieA: 3, dieB: 5, total: null });
 
   const rollDice = () => {
     const a: number = Math.ceil(Math.random() * 6);
     const b: number = Math.ceil(Math.random() * 6);
     setDiceResult({ dieA: a, dieB: b, total: a + b });
+    movePiece(a + b, activePlayer);
   };
 
   return (
@@ -23,8 +30,11 @@ function DiceGroup() {
         <Dice rolledNum={diceResult.dieA} />
         <Dice rolledNum={diceResult.dieB} />
       </div>
+
+      <button onClick={() => rollDice()} className="dice-group__roll-btn">
+        Roll the Dice
+      </button>
       {diceResult.total && <div className="dice-group__result">You rolled a {diceResult.total}</div>}
-      <button onClick={() => rollDice()} className="dice-group__roll-btn">Roll the Dice</button>
     </div>
   );
 }

@@ -15,4 +15,11 @@
     padding: 0.25rem;
     width: fit-content;
   }
+  &__token {
+    background-color: rgb(45, 31, 141);
+    border-radius: 50px;
+    font-size: 0.75rem;
+    margin: 0.125rem 0.25rem;
+    text-align: center;
+  }
 }

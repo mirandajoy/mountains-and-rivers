@@ -1,14 +1,7 @@
 import { useState } from "react";
 import "./PlayerList.scss";
 
-function PlayerList() {
-  const players: string[] = ["Player 1", "Player 2"];
-  const [activePlayer, setActivePlayer] = useState<number>(0);
-
-  function changePlayer() {
-    setActivePlayer((prevPlayer) => (prevPlayer === players.length - 1 ? 0 : prevPlayer + 1));
-  }
-
+function PlayerList({ players, activePlayer }: { players: string[], activePlayer: number }) {
   return (
     <div className="players">
       <ul className="players__list">
@@ -21,7 +14,7 @@ function PlayerList() {
           );
         })}
       </ul>
-      <button onClick={() => changePlayer()}>Complete Turn</button>
+      {/* <button onClick={() => changePlayer()}>Complete Turn</button> */}
     </div>
   );
 }
