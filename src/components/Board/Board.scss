@@ -1,0 +1,18 @@
+.board {
+  display: grid;
+  grid-template-columns: repeat(10, 4.5rem);
+  &__space {
+    background-color: black;
+    width: 4.5rem;
+    height: 4.5rem;
+    &--odd {
+      background-color: rgb(104, 104, 104);
+    }
+  }
+  &__number {
+    font-size: 0.5rem;
+    font-weight: bold;
+    padding: 0.25rem;
+    width: fit-content;
+  }
+}
