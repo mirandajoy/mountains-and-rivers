@@ -1,0 +1,25 @@
+.dice {
+  align-items: center;
+  background-color: white;
+  border-radius: 2px;
+  display: flex;
+  justify-content: space-around;
+  height: 5rem;
+  width: 5rem;
+  &__col {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 100%;
+  }
+  &__dot {
+    background-color: black;
+    border-radius: 50px;
+    height: 0.75rem;
+    width: 0.75rem;
+    &--hidden {
+      height: 0.75rem;
+      width: 0.75rem;
+    }
+  }
+}
