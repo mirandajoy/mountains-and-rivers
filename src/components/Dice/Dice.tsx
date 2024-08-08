@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./Dice.scss";
 
-function Dice() {
+function Dice({ rolledNum }: { rolledNum: number }) {
   const [visibleDots, setVisibleDots] = useState({
     dot1: true,
     dot2: false,
@@ -13,12 +13,11 @@ function Dice() {
   });
 
   useEffect(() => {
-    const numRolled: number = 5;
-    setRolledNum(numRolled);
-  },[]);
+    setRolledNum(rolledNum);
+  }, [rolledNum]);
 
-  function setRolledNum(numRolled: number) {
-    switch (numRolled) {
+  function setRolledNum(rolledNum: number) {
+    switch (rolledNum) {
       case 1:
         setVisibleDots({
           dot1: false,
@@ -29,7 +28,6 @@ function Dice() {
           dot6: false,
           dot7: false,
         });
-        console.log("You rolled a 1");
         break;
       case 2:
         setVisibleDots({
@@ -41,7 +39,6 @@ function Dice() {
           dot6: false,
           dot7: true,
         });
-        console.log("You rolled a 2");
         break;
       case 3:
         setVisibleDots({
@@ -53,7 +50,6 @@ function Dice() {
           dot6: false,
           dot7: true,
         });
-        console.log("You rolled a 3");
         break;
       case 4:
         setVisibleDots({
@@ -65,7 +61,6 @@ function Dice() {
           dot6: false,
           dot7: true,
         });
-        console.log("You rolled a 4");
         break;
       case 5:
         setVisibleDots({
@@ -77,7 +72,6 @@ function Dice() {
           dot6: false,
           dot7: true,
         });
-        console.log("You rolled a 5");
         break;
       case 6:
         setVisibleDots({
@@ -89,7 +83,6 @@ function Dice() {
           dot6: true,
           dot7: true,
         });
-        console.log("You rolled a 6");
         break;
       default:
         setVisibleDots({
@@ -101,7 +94,6 @@ function Dice() {
           dot6: false,
           dot7: false,
         });
-        console.log("Roll failed, try again");
         break;
     }
   }

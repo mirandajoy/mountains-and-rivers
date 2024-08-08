@@ -1,0 +1,12 @@
+.dice-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  &__dice-container {
+    display: flex;
+    gap: 1rem;
+  }
+  &__result {
+    text-align: center;
+  }
+}

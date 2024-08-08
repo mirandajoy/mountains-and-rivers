@@ -1,11 +1,10 @@
-import Dice from "./components/Dice/Dice";
-
 import "./App.css";
+import DiceGroup from "./components/DiceGroup/DiceGroup";
 
 function App() {
   return (
     <>
-      <Dice />
+      <DiceGroup />
     </>
   );
 }
