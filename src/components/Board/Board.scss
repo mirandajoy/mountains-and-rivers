@@ -3,34 +3,36 @@
   grid-template-columns: repeat(10, 4.5rem);
   position: relative;
   &__space {
-    background-color: black;
+    background-color: #eadbcb;
     width: 4.5rem;
     height: 4.5rem;
     &--odd {
-      background-color: rgb(104, 104, 104);
+      background-color: #f6f0ea;
     }
   }
   &__number {
+    color: #585858;
     font-size: 0.5rem;
     font-weight: bold;
     padding: 0.25rem;
     width: fit-content;
   }
   &__token {
-    background-color: rgb(45, 31, 141);
+    background-color: #518a46;
     border-radius: 50px;
     font-size: 0.75rem;
+    font-weight: bold;
     margin: 0.125rem 0.25rem;
     text-align: center;
   }
   &__ladder {
-    border-bottom: 4px solid rgb(97, 139, 213);
+    border-bottom: 2px solid #3e4f73;
     border-radius: 50px;
     position: absolute;
     transform-origin: bottom left;
   }
   &__snake {
-    border-bottom: 4px solid rgb(255, 242, 0);
+    border-bottom: 3px solid #5bb7de;
     border-radius: 50px;
     position: absolute;
     transform-origin: bottom left;

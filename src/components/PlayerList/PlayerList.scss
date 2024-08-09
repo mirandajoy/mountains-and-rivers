@@ -5,8 +5,11 @@
   &__list {
     list-style: none;
   }
+  &__name {
+    font-weight: bold;
+  }
   &__active-tag {
-    background-color: green;
+    background-color: #518a46;
     border-radius: 50px;
     color: white;
     font-size: 0.75rem;
