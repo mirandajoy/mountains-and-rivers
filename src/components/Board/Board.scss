@@ -1,6 +1,7 @@
 .board {
   display: grid;
   grid-template-columns: repeat(10, 4.5rem);
+  position: relative;
   &__space {
     background-color: black;
     width: 4.5rem;
@@ -21,5 +22,17 @@
     font-size: 0.75rem;
     margin: 0.125rem 0.25rem;
     text-align: center;
+  }
+  &__ladder {
+    border-bottom: 4px solid rgb(97, 139, 213);
+    border-radius: 50px;
+    position: absolute;
+    transform-origin: bottom left;
+  }
+  &__snake {
+    border-bottom: 4px solid rgb(255, 242, 0);
+    border-radius: 50px;
+    position: absolute;
+    transform-origin: bottom left;
   }
 }

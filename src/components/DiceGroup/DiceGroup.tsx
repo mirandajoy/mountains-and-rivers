@@ -11,9 +11,11 @@ interface DiceResults {
 function DiceGroup({
   movePiece,
   activePlayer,
+  rollDisabled,
 }: {
   movePiece: (distance: number, player: number) => void;
   activePlayer: number;
+  rollDisabled: boolean;
 }) {
   const [diceResult, setDiceResult] = useState<DiceResults>({ dieA: 3, dieB: 5, total: null });
 
@@ -31,10 +33,10 @@ function DiceGroup({
         <Dice rolledNum={diceResult.dieB} />
       </div>
 
-      <button onClick={() => rollDice()} className="dice-group__roll-btn">
+      {!rollDisabled && <button onClick={() => rollDice()} className="dice-group__roll-btn">
         Roll the Dice
-      </button>
-      {diceResult.total && <div className="dice-group__result">You rolled a {diceResult.total}</div>}
+      </button>}
+      {rollDisabled && diceResult.total && <div className="dice-group__result">You rolled a {diceResult.total}</div>}
     </div>
   );
 }

@@ -1,10 +1,12 @@
 import "./Board.scss";
+import { ladderDetails } from "../../utils/calcLadderPos.ts";
+import { snakeDetails } from "../../utils/calcSnakePos.ts";
 
 interface PlayerPosition {
   [key: number]: number;
 }
 
-function Board({ players, boardPosition }: { players: string[], boardPosition: PlayerPosition }) {
+function Board({ players, boardPosition }: { players: string[]; boardPosition: PlayerPosition }) {
   const boardOrder: number[] = [
     100, 99, 98, 97, 96, 95, 94, 93, 92, 91, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 80, 79, 78, 77, 76, 75, 74, 73, 72,
     71, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 60, 59, 58, 57, 56, 55, 54, 53, 52, 51, 41, 42, 43, 44, 45, 46, 47, 48,
@@ -25,6 +27,36 @@ function Board({ players, boardPosition }: { players: string[], boardPosition: P
             {boardPosition[0] == sq && <div className="board__token">{players[0]}</div>}
             {boardPosition[1] == sq && <div className="board__token">{players[1]}</div>}
           </div>
+        );
+      })}
+      {ladderDetails.map((l, i) => {
+        const transformStyle = `rotate(-${l.angle}rad)`;
+        return (
+          <div
+            key={i}
+            className="board__ladder"
+            style={{
+              left: `calc(4.5rem * ${l.start.x} + 2.25rem)`,
+              bottom: `calc(4.5rem * ${l.start.y} + 2.25rem)`,
+              width: `calc(${l.hypot}rem)`,
+              transform: transformStyle,
+            }}
+          ></div>
+        );
+      })}
+      {snakeDetails.map((s, i) => {
+        const transformStyle = `rotate(-${s.angle}rad)`;
+        return (
+          <div
+            key={i}
+            className="board__snake"
+            style={{
+              left: `calc(4.5rem * ${s.start.x} + 2.25rem)`,
+              bottom: `calc(4.5rem * ${s.start.y} + 2.25rem)`,
+              width: `calc(${s.hypot}rem)`,
+              transform: transformStyle,
+            }}
+          ></div>
         );
       })}
     </div>
