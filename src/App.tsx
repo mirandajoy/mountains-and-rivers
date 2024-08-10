@@ -18,6 +18,7 @@ function App() {
   const [activePlayer, setActivePlayer] = useState<number>(0);
   const [rollDisabled, setRollDisabled] = useState<boolean>(false);
   const [winner, setWinner] = useState<number | null>(null);
+  const [message, setMessage] = useState<string | null>(null);
 
   const startGame = (player: string) => {
     setPlayers([player, "Computer"]);
@@ -55,22 +56,28 @@ function App() {
       setTimeout(function () {
         changePlayer();
         setRollDisabled(false);
-      }, 2000);
+      }, 2500);
   };
 
   const checkAdditionalMoves = (pos: number, player: number) => {
     const ladder = ladderSpaces.find((l) => l.startSq === pos);
     const snake = snakeSpaces.find((s) => s.endSq === pos);
+    ladder !== undefined && setMessage(`${players[player]} climbs up a mountain`);
     ladder !== undefined &&
       setTimeout(function () {
         setBoardPosition({ ...boardPosition, [player]: ladder.endSq });
+        setTimeout(function () {
+          setMessage(null);
+        }, 500);
       }, 2000);
-    ladder !== undefined && console.log(players[player] + " up a ladder");
+    snake !== undefined && setMessage(`${players[player]} slides down a river`);
     snake !== undefined &&
       setTimeout(function () {
         setBoardPosition({ ...boardPosition, [player]: snake.startSq });
-      }, 1200);
-    snake !== undefined && console.log(players[player] + " down a snake");
+        setTimeout(function () {
+          setMessage(null);
+        }, 500);
+      }, 2000);
   };
 
   return (
@@ -82,6 +89,7 @@ function App() {
             {winner !== null && <p className="app__winner">{players[winner]} wins!</p>}
             <PlayerList players={players} activePlayer={activePlayer} />
             <DiceGroup movePiece={movePiece} activePlayer={activePlayer} rollDisabled={rollDisabled} />
+            {message !== null && <p className="app__message">{message}</p>}
           </div>
         </>
       ) : (
