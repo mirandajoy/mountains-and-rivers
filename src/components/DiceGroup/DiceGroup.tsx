@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./DiceGroup.scss";
 import Dice from "../Dice/Dice";
 
@@ -25,6 +25,10 @@ function DiceGroup({
     setDiceResult({ dieA: a, dieB: b, total: a + b });
     movePiece(a + b, activePlayer);
   };
+
+  useEffect(() => {
+    activePlayer === 1 && rollDice();
+  }, [activePlayer])
 
   return (
     <div className="dice-group">
