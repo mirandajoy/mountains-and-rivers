@@ -17,11 +17,12 @@ function App() {
   const [boardPosition, setBoardPosition] = useState<PlayerPosition>({});
   const [activePlayer, setActivePlayer] = useState<number>(0);
   const [rollDisabled, setRollDisabled] = useState<boolean>(false);
+  const [winner, setWinner] = useState<number | null>(null);
 
   const startGame = (player: string) => {
-    setPlayers([player, "Computer"])
+    setPlayers([player, "Computer"]);
     setGameStarted(true);
-  }
+  };
 
   const setInitialPositions = () => {
     const posObj: Record<number, number> = {};
@@ -42,17 +43,19 @@ function App() {
   const movePiece = (distance: number, player: number) => {
     const newPos: number = boardPosition[player as keyof PlayerPosition] + distance;
     setRollDisabled(true);
+    newPos >= 100 && setWinner(player);
     setTimeout(function () {
       setBoardPosition((prevPositions) => ({
         ...prevPositions,
-        [player]: newPos,
+        [player]: newPos < 100 ? newPos : 100,
       }));
     }, 300);
     checkAdditionalMoves(newPos, player);
-    setTimeout(function () {
-      changePlayer();
-      setRollDisabled(false);
-    }, 2000);
+    newPos < 100 &&
+      setTimeout(function () {
+        changePlayer();
+        setRollDisabled(false);
+      }, 2000);
   };
 
   const checkAdditionalMoves = (pos: number, player: number) => {
@@ -76,6 +79,7 @@ function App() {
         <>
           <Board boardPosition={boardPosition} />
           <div className="app__actions">
+            {winner !== null && <p className="app__winner">{players[winner]} wins!</p>}
             <PlayerList players={players} activePlayer={activePlayer} />
             <DiceGroup movePiece={movePiece} activePlayer={activePlayer} rollDisabled={rollDisabled} />
           </div>
