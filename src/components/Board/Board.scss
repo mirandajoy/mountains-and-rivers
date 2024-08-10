@@ -4,8 +4,12 @@
   position: relative;
   &__space {
     background-color: #eadbcb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 4.5rem;
     height: 4.5rem;
+    position: relative;
     &--odd {
       background-color: #f6f0ea;
     }
@@ -14,26 +18,30 @@
     color: #585858;
     font-size: 0.5rem;
     font-weight: bold;
+    position: absolute;
+    top: 0.25rem;
+    left: 0.25rem;
+    width: fit-content;
+  }
+  &__token-container {
+    background-color: #518a46;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0.125rem 0.25rem;
     padding: 0.25rem;
+    text-align: center;
     width: fit-content;
   }
   &__token {
-    background-color: #518a46;
-    border-radius: 50px;
     font-size: 0.75rem;
-    font-weight: bold;
-    margin: 0.125rem 0.25rem;
-    text-align: center;
   }
   &__ladder {
-    border-bottom: 2px solid #3e4f73;
-    border-radius: 50px;
     position: absolute;
     transform-origin: bottom left;
   }
   &__snake {
-    border-bottom: 3px solid #5bb7de;
-    border-radius: 50px;
     position: absolute;
     transform-origin: bottom left;
   }
