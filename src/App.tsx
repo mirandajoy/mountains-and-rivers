@@ -3,6 +3,7 @@ import "./App.scss";
 import Board from "./components/Board/Board";
 import DiceGroup from "./components/DiceGroup/DiceGroup";
 import PlayerList from "./components/PlayerList/PlayerList";
+import GameSetup from "./components/GameSetup/GameSetup";
 import { ladderSpaces } from "./utils/calcLadderPos.ts";
 import { snakeSpaces } from "./utils/calcSnakePos.ts";
 
@@ -11,10 +12,16 @@ interface PlayerPosition {
 }
 
 function App() {
-  const players: string[] = ["Player 1", "Player 2"];
+  const [players, setPlayers] = useState<string[]>([]);
+  const [gameStarted, setGameStarted] = useState<boolean>(false);
   const [boardPosition, setBoardPosition] = useState<PlayerPosition>({});
   const [activePlayer, setActivePlayer] = useState<number>(0);
   const [rollDisabled, setRollDisabled] = useState<boolean>(false);
+
+  const startGame = (player: string) => {
+    setPlayers([player, "Computer"])
+    setGameStarted(true);
+  }
 
   const setInitialPositions = () => {
     const posObj: Record<number, number> = {};
@@ -26,7 +33,7 @@ function App() {
 
   useEffect(() => {
     setInitialPositions();
-  }, []);
+  }, [players]);
 
   function changePlayer() {
     setActivePlayer((prevPlayer) => (prevPlayer === players.length - 1 ? 0 : prevPlayer + 1));
@@ -65,11 +72,17 @@ function App() {
 
   return (
     <div className="app">
-      <Board players={players} boardPosition={boardPosition} />
-      <div className="app__actions">
-        <PlayerList players={players} activePlayer={activePlayer} />
-        <DiceGroup movePiece={movePiece} activePlayer={activePlayer} rollDisabled={rollDisabled}/>
-      </div>
+      {gameStarted ? (
+        <>
+          <Board boardPosition={boardPosition} />
+          <div className="app__actions">
+            <PlayerList players={players} activePlayer={activePlayer} />
+            <DiceGroup movePiece={movePiece} activePlayer={activePlayer} rollDisabled={rollDisabled} />
+          </div>
+        </>
+      ) : (
+        <GameSetup startGame={startGame} />
+      )}
     </div>
   );
 }
