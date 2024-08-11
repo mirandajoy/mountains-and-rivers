@@ -71,7 +71,6 @@ function Board({ boardPosition }: { boardPosition: PlayerPosition }) {
         );
       })}
       {snakeDetails.map((s, i) => {
-        console.log(s.hypot);
         const transformStyle = `rotate(-${s.angle}rad)`;
         const img = () => {
           if (s.hypot < 12) {
