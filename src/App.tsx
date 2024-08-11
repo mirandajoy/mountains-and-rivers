@@ -29,6 +29,13 @@ function App() {
     setActivePlayer(0);
   };
 
+  const restartGame = (player?: string) => {
+    player ? startGame(player) : setGameSetup("");
+    setRollDisabled(false);
+    setWinner(null);
+    setMessage(null);
+  }
+
   function changePlayer() {
     setActivePlayer(activePlayer === 0 ? 1 : 0);
   }
@@ -89,6 +96,10 @@ function App() {
             <PlayerList players={gameSetup.players} activePlayer={activePlayer} />
             <DiceGroup movePiece={movePiece} activePlayer={activePlayer} rollDisabled={rollDisabled} />
             {message !== null && <p className="app__message">{message}</p>}
+            <div>
+              <button onClick={() => restartGame(gameSetup.players[0])}>Restart</button>
+              <button onClick={() => restartGame()}>New Game</button>
+            </div>
           </div>
         </>
       ) : (
