@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 const getSessionValue = (key: string, initialValue: string | number ) => {
-  const sessionValue = JSON.parse(sessionStorage.getItem(key) || '');
+  const sessionValue = JSON.parse(sessionStorage.getItem(key) || 'null');
   if (sessionValue) return sessionValue;
 
   return initialValue;

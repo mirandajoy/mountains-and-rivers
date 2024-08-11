@@ -1,14 +1,12 @@
 import "./Board.scss";
 import { ladderDetails } from "../../utils/calcLadderPos.ts";
 import { snakeDetails } from "../../utils/calcSnakePos.ts";
-import river from "../../assets/simple-river.svg";
 import riverS from "../../assets/simple-river-s.svg";
 import riverM from "../../assets/simple-river-m.svg";
 import riverL from "../../assets/simple-river-l.svg";
 import mountainS from "../../assets/simple-mountain-s.svg";
 import mountainM from "../../assets/simple-mountain-m.svg";
 import mountainL from "../../assets/simple-mountain-l.svg";
-import mountain from "../../assets/simple-mountain-2.svg";
 
 interface PlayerPosition {
   [key: number]: number;
@@ -28,16 +26,16 @@ function Board({ boardPosition }: { boardPosition: PlayerPosition }) {
         return (
           <div
             key={i}
-            id={sq as any as string}
+            id={sq.toString()}
             className={`board__space ${sq % 2 ? "board__space--odd" : "board__space--even"}`}
           >
             <div className="board__number">{sq}</div>
-            {boardPosition[0] == sq && (
+            {boardPosition[0] === sq && (
               <div className="board__token-container">
                 <span className="material-symbols-outlined board__token">eco</span>
               </div>
             )}
-            {boardPosition[1] == sq && (
+            {boardPosition[1] === sq && (
               <div className="board__token-container">
                 <span className="material-symbols-outlined board__token">spa</span>
               </div>
