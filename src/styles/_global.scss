@@ -1,0 +1,42 @@
+@use "./variables" as *;
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: $color-bg-primary;
+  color: $color-font-light;
+  font-family: $primary-font;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+button {
+  background-color: $color-cta;
+  border-radius: $border-radius-m;
+  border: 1px solid transparent;
+  color: $color-font-light;
+  cursor: pointer;
+  font-family: $primary-font;
+  font-size: 1.125rem;
+  font-weight: bold;
+  letter-spacing: 0.75px;
+  padding: 0.75rem 1rem;
+}
+button:hover {
+  background-color: $color-cta-hover;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto $color-font-light;
+}
+
+label {
+  font-size: 1rem;
+  font-weight: bold;
+}

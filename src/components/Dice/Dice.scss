@@ -1,25 +1,25 @@
+@use "../../styles/variables" as *;
+@use "../../styles/mixins" as *;
+
 .dice {
-  align-items: center;
-  background-color: white;
-  border-radius: 2px;
-  display: flex;
-  justify-content: space-around;
-  height: 5rem;
-  width: 5rem;
+  @include flex(center, space-around);
+  background-color: $color-font-light;
+  border-radius: $border-radius-s;
+  height: $dice-size;
+  padding: 0.5rem;
+  width: $dice-size;
   &__col {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
+    @include flex-column(space-around);
     height: 100%;
   }
   &__dot {
-    background-color: black;
-    border-radius: 50px;
-    height: 0.75rem;
-    width: 0.75rem;
+    background-color: $color-font-med;
+    border-radius: $border-radius-round;
+    height: $dice-dot-size;
+    width: $dice-dot-size;
     &--hidden {
-      height: 0.75rem;
-      width: 0.75rem;
+      height: $dice-dot-size;
+      width: $dice-dot-size;
     }
   }
 }

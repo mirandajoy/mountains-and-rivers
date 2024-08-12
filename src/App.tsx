@@ -22,7 +22,7 @@ function App() {
 
   const startGame = (player: string) => {
     setGameSetup({
-      players: [player, "Computer"],
+      players: [player, "The Guide"],
       gameStarted: true,
     });
     setBoardPosition({ 0: 1, 1: 1 });
@@ -34,7 +34,7 @@ function App() {
     setRollDisabled(false);
     setWinner(null);
     setMessage(null);
-  }
+  };
 
   function changePlayer() {
     setActivePlayer(activePlayer === 0 ? 1 : 0);
@@ -50,7 +50,7 @@ function App() {
         ...boardPosition,
         [player]: pos,
       });
-    }, 300);
+    }, 1000);
     checkAdditionalMoves(newPos, player);
     newPos < 100 &&
       setTimeout(function () {
@@ -77,7 +77,7 @@ function App() {
     snake !== undefined &&
       setTimeout(function () {
         setBoardPosition({
-          ...gameSetup.boardPosition,
+          ...boardPosition,
           [player]: snake.startSq,
         });
         setTimeout(function () {
@@ -92,11 +92,13 @@ function App() {
         <>
           <Board boardPosition={boardPosition} />
           <div className="app__actions">
-            {winner !== null && <p className="app__winner">{gameSetup.players[winner]} wins!</p>}
-            <PlayerList players={gameSetup.players} activePlayer={activePlayer} />
-            <DiceGroup movePiece={movePiece} activePlayer={activePlayer} rollDisabled={rollDisabled} />
-            {message !== null && <p className="app__message">{message}</p>}
-            <div>
+            <div className="app__actions-primary">
+              {winner !== null && <p className="app__winner">{gameSetup.players[winner]} wins!</p>}
+              <PlayerList players={gameSetup.players} activePlayer={activePlayer} />
+              <DiceGroup movePiece={movePiece} activePlayer={activePlayer} rollDisabled={rollDisabled} />
+              {message !== null && <p className="app__message">{message}</p>}
+            </div>
+            <div className="app__actions-secondary">
               <button onClick={() => restartGame(gameSetup.players[0])}>Restart</button>
               <button onClick={() => restartGame()}>New Game</button>
             </div>

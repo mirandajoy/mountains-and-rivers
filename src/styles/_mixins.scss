@@ -1,0 +1,23 @@
+@use "./variables" as *;
+@use "./global" as *;
+
+@mixin light-background {
+  background-color: $color-transparent-light;
+  border-radius: $border-radius-s;
+  font-weight: bold;
+  padding: 1rem;
+  text-align: center;
+}
+
+@mixin flex($align: center, $justify: center) {
+  align-items: $align;
+  display: flex;
+  justify-content: $justify;
+}
+
+@mixin flex-column($justify: flex-start, $align: stretch) {
+  align-items: $align;
+  display: flex;
+  flex-direction: column;
+  justify-content: $justify;
+}

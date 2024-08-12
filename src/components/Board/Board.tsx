@@ -31,12 +31,12 @@ function Board({ boardPosition }: { boardPosition: PlayerPosition }) {
           >
             <div className="board__number">{sq}</div>
             {boardPosition[0] === sq && (
-              <div className="board__token-container">
+              <div className="board__token-container board__token-container--option-1">
                 <span className="material-symbols-outlined board__token">eco</span>
               </div>
             )}
             {boardPosition[1] === sq && (
-              <div className="board__token-container">
+              <div className="board__token-container board__token-container--option-2">
                 <span className="material-symbols-outlined board__token">spa</span>
               </div>
             )}

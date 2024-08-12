@@ -1,12 +1,23 @@
+@use "../../styles/variables" as *;
+@use "../../styles/mixins" as *;
+
 .dice-group {
-  display: flex;
-  flex-direction: column;
+  @include flex-column;
   gap: 1rem;
   &__dice-container {
-    display: flex;
-    gap: 1rem;
+    @include flex;
+    gap: 1.5rem;
+  }
+  &__text-container {
+    @include flex(center, stretch);
+    min-height: 2.75rem;
+  }
+  &__roll-btn {
+    width: 100%;
   }
   &__result {
+    font-weight: 700;
     text-align: center;
+    width: 100%;
   }
 }

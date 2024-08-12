@@ -1,21 +1,22 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
 .board {
   display: grid;
   grid-template-columns: repeat(10, 4.5rem);
   position: relative;
   &__space {
-    background-color: #eadbcb;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 4.5rem;
-    height: 4.5rem;
+    @include flex;
+    background-color: $color-board-primary;
+    width: $board-space-l;
+    height: $board-space-l;
     position: relative;
     &--odd {
-      background-color: #f6f0ea;
+      background-color: $color-board-secondary;
     }
   }
   &__number {
-    color: #585858;
+    color: $color-font-med;
     font-size: 0.5rem;
     font-weight: bold;
     position: absolute;
@@ -24,15 +25,24 @@
     width: fit-content;
   }
   &__token-container {
-    background-color: #518a46;
-    border-radius: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    @include flex;
+    border-radius: $border-radius-round;
     margin: 0.125rem 0.25rem;
     padding: 0.25rem;
     text-align: center;
     width: fit-content;
+    &--option-1 {
+      background-color: $color-highlight-1;
+    }
+    &--option-2 {
+      background-color: $color-highlight-2;
+    }
+    &--option-3 {
+      background-color: $color-highlight-3;
+    }
+    &--option-4 {
+      background-color: $color-highlight-4;
+    }
   }
   &__token {
     font-size: 0.75rem;

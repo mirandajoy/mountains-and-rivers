@@ -28,7 +28,7 @@ function DiceGroup({
 
   useEffect(() => {
     activePlayer === 1 && rollDice();
-  }, [activePlayer])
+  }, [activePlayer]);
 
   return (
     <div className="dice-group">
@@ -36,11 +36,14 @@ function DiceGroup({
         <Dice rolledNum={diceResult.dieA} />
         <Dice rolledNum={diceResult.dieB} />
       </div>
-
-      {!rollDisabled && <button onClick={() => rollDice()} className="dice-group__roll-btn">
-        Roll the Dice
-      </button>}
-      {rollDisabled && diceResult.total && <div className="dice-group__result">You rolled a {diceResult.total}</div>}
+      <div className="dice-group__text-container">
+        {!rollDisabled && (
+          <button onClick={() => rollDice()} className="dice-group__roll-btn">
+            Roll the Dice
+          </button>
+        )}
+        {rollDisabled && diceResult.total && <div className="dice-group__result">{activePlayer === 0 ? `You rolled a ${diceResult.total}` : `The guide rolled a ${diceResult.total}`}</div>}
+      </div>
     </div>
   );
 }

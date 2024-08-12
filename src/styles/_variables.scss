@@ -1,0 +1,38 @@
+//colors
+$color-bg-primary: #2b2924;
+$color-bg-tertiary: #FFFBF4;
+
+$color-board-primary: rgba(#F4EAD6, 0.8);
+$color-board-secondary: rgba(#F8F2E6, 0.6);
+
+$color-font-dark: #383631;
+$color-font-med: #383631;
+$color-font-light: #FAF8F6;
+$color-transparent-light: rgba(#FAF8F6, 0.15);
+$color-transparent-med-light: rgba(#FAF8F6, 0.5);
+
+$color-cta: #1F1C15;
+$color-cta-hover: #0e0d0a;
+$color-mountain: #727F82;
+$color-river: #8CC7F1;
+$color-highlight-1: #235D4C;
+$color-highlight-2: #328F73;
+$color-highlight-3: #2FA45E;
+$color-highlight-4: #6FB676;
+
+//borders
+$border-radius-s: 4px;
+$border-radius-m: 8px;
+$border-radius-l: 12px;
+$border-radius-round: 50px;
+
+$border-light: 1px solid $color-transparent-med-light;
+$border-dark: 1px solid $color-font-dark;
+
+//fonts
+$primary-font: "Quattrocento", serif;
+
+//spacing
+$board-space-l: 4.5rem;
+$dice-size: 4.5rem;
+$dice-dot-size: 0.9rem;
