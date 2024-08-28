@@ -17,48 +17,69 @@ interface PlayerPosition {
 interface GameSetup {
   players: string[];
   gameStarted: boolean;
+  soloGame: boolean;
 }
 
 function App() {
+  const [gameRoom, setGameRoom] = useSessionStorage("room", "");
   const [gameSetup, setGameSetup] = useSessionStorage("gameStatus", "");
   const [boardPosition, setBoardPosition] = useSessionStorage("boardPosition", "");
   const [activePlayer, setActivePlayer] = useSessionStorage("activePlayer", 0);
   const [winner, setWinner] = useSessionStorage("winner", null);
-  const [message, setMessage] = useSessionStorage("winner", null);
-
+  const [message, setMessage] = useSessionStorage("message", null);
+  const [yourName, setYourName] = useSessionStorage("yourName", null);
   const [rollDisabled, setRollDisabled] = useState<boolean>(false);
   const { socket } = useContext(SocketsContext);
+  const yourId = gameSetup.players && gameSetup.players.indexOf(yourName);
 
-  const startGame = (player: string) => {
-    socket.emit("gameSetup", {
-      players: [player, "The Guide"],
-      gameStarted: true,
-    });
-    socket.emit("boardPosition", { 0: 1, 1: 1 });
-    socket.emit("activePlayer", 0);
+  const startGame = (players: string[], soloGame: boolean | null) => {
+    const playerList: string[] = soloGame ? [...players, "The Guide"] : players;
+    const boardPosition = playerList.reduce((acc: any, cur, index: any) => {
+      acc[index] = 1;
+      return acc;
+    }, {});
+
+    socket.emit(
+      "gameSetup",
+      {
+        players: playerList,
+        gameStarted: true,
+        soloGame: soloGame,
+      },
+      gameRoom
+    );
+    socket.emit("boardPosition", boardPosition, gameRoom);
+    socket.emit("activePlayer", 0, gameRoom);
   };
 
-  const restartGame = (player?: string) => {
-    player ? startGame(player) : socket.emit("gameSetup", "");
+  const restartGame = (player?: string[]) => {
+    const playerList = player && gameSetup.soloGame ? [player[0]] : player;
+    console.log(!!playerList);
+    !!playerList ? startGame(playerList, gameSetup.soloGame) : socket.emit("resetRoom", gameRoom);
     setRollDisabled(false);
-    socket.emit("winner", null);
-    socket.emit("message", null);
+    socket.emit("winner", null, gameRoom);
+    socket.emit("message", null, gameRoom);
   };
 
   function changePlayer() {
-    socket.emit("activePlayer", activePlayer === 0 ? 1 : 0);
+    const newActivePlayer = activePlayer === gameSetup.players.length - 1 ? 0 : activePlayer + 1;
+    socket.emit("activePlayer", newActivePlayer, gameRoom);
   }
 
   const movePiece = (distance: number, player: number) => {
     const newPos: number = boardPosition[player as keyof PlayerPosition] + distance;
     setRollDisabled(true);
-    newPos >= 100 && socket.emit("winner", player);
+    newPos >= 100 && socket.emit("winner", player, gameRoom);
     setTimeout(function () {
       const pos = newPos < 100 ? newPos : 100;
-      socket.emit("boardPosition", {
-        ...boardPosition,
-        [player]: pos,
-      });
+      socket.emit(
+        "boardPosition",
+        {
+          ...boardPosition,
+          [player]: pos,
+        },
+        gameRoom
+      );
     }, 1000);
     checkAdditionalMoves(newPos, player);
     newPos < 100 &&
@@ -71,26 +92,34 @@ function App() {
   const checkAdditionalMoves = (pos: number, player: number) => {
     const ladder = ladderSpaces.find((l) => l.startSq === pos);
     const snake = snakeSpaces.find((s) => s.endSq === pos);
-    ladder !== undefined && socket.emit("message", `${gameSetup.players[player]} climbs up a mountain`);
+    ladder !== undefined && socket.emit("message", `${gameSetup.players[player]} climbs up a mountain`, gameRoom);
     ladder !== undefined &&
       setTimeout(function () {
-        socket.emit("boardPosition", {
-          ...boardPosition,
-          [player]: ladder.endSq,
-        });
+        socket.emit(
+          "boardPosition",
+          {
+            ...boardPosition,
+            [player]: ladder.endSq,
+          },
+          gameRoom
+        );
         setTimeout(function () {
-          socket.emit("message", null);
+          socket.emit("message", null, gameRoom);
         }, 500);
       }, 2000);
-    snake !== undefined && socket.emit("message", `${gameSetup.players[player]} slides down a river`);
+    snake !== undefined && socket.emit("message", `${gameSetup.players[player]} slides down a river`, gameRoom);
     snake !== undefined &&
       setTimeout(function () {
-        socket.emit("boardPosition", {
-          ...boardPosition,
-          [player]: snake.startSq,
-        });
+        socket.emit(
+          "boardPosition",
+          {
+            ...boardPosition,
+            [player]: snake.startSq,
+          },
+          gameRoom
+        );
         setTimeout(function () {
-          socket.emit("message", null);
+          socket.emit("message", null, gameRoom);
         }, 500);
       }, 2000);
   };
@@ -115,6 +144,17 @@ function App() {
     socket.on("message", (message: string | null) => {
       setMessage(message);
     });
+
+    socket.on("joinRoom", (roomId: number) => {
+      setGameRoom(roomId);
+    });
+
+    socket.on("resetRoom", () => {
+      console.log("Test");
+      sessionStorage.clear();
+      setGameSetup("");
+      setGameRoom("");
+    });
   }, [socket]);
 
   return (
@@ -125,18 +165,25 @@ function App() {
           <div className="app__actions">
             <div className="app__actions-primary">
               {winner !== null && <p className="app__winner">{gameSetup.players[winner]} wins!</p>}
-              <PlayerList players={gameSetup.players} activePlayer={activePlayer} />
-              <DiceGroup movePiece={movePiece} activePlayer={activePlayer} rollDisabled={rollDisabled} />
+              <PlayerList players={gameSetup.players} activePlayer={activePlayer} yourId={yourId} />
+              <DiceGroup
+                movePiece={movePiece}
+                activePlayer={activePlayer}
+                rollDisabled={rollDisabled}
+                gameRoom={gameRoom}
+                gameSetup={gameSetup}
+                yourId={yourId}
+              />
               {message !== null && <p className="app__message">{message}</p>}
             </div>
             <div className="app__actions-secondary">
-              <button onClick={() => restartGame(gameSetup.players[0])}>Restart</button>
+              <button onClick={() => restartGame(gameSetup.players)}>Restart</button>
               <button onClick={() => restartGame()}>New Game</button>
             </div>
           </div>
         </>
       ) : (
-        <GameSetup startGame={startGame} />
+        <GameSetup startGame={startGame} gameRoom={gameRoom} setYourName={setYourName} />
       )}
     </div>
   );

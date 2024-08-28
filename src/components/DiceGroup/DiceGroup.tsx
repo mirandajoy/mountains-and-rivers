@@ -10,14 +10,26 @@ interface DiceResults {
   total: number | null;
 }
 
+interface GameSetup {
+  players: string[];
+  gameStarted: boolean;
+  soloGame: boolean;
+}
+
 function DiceGroup({
   movePiece,
   activePlayer,
   rollDisabled,
+  gameRoom,
+  gameSetup,
+  yourId,
 }: {
   movePiece: (distance: number, player: number) => void;
   activePlayer: number;
   rollDisabled: boolean;
+  gameRoom: number;
+  gameSetup: GameSetup;
+  yourId: number;
 }) {
   const [diceResult, setDiceResult] = useSessionStorage("diceResult", { dieA: 3, dieB: 5, total: null });
   const { socket } = useContext(SocketsContext);
@@ -25,12 +37,12 @@ function DiceGroup({
   const rollDice = () => {
     const a: number = Math.ceil(Math.random() * 6);
     const b: number = Math.ceil(Math.random() * 6);
-    socket.emit("diceRoll", { dieA: a, dieB: b, total: a + b });
+    socket.emit("diceRoll", { dieA: a, dieB: b, total: a + b }, gameRoom);
     movePiece(a + b, activePlayer);
   };
 
   useEffect(() => {
-    activePlayer === 1 && rollDice();
+    gameSetup.soloGame && activePlayer === 1 && rollDice();
     socket.on("diceRoll", (rollValues: DiceResults) => {
       setDiceResult(rollValues);
     });
@@ -44,13 +56,19 @@ function DiceGroup({
       </div>
       <div className="dice-group__text-container">
         {!rollDisabled && (
-          <button onClick={() => rollDice()} className="dice-group__roll-btn">
+          <button
+            onClick={() => rollDice()}
+            className={`dice-group__roll-btn ${activePlayer !== yourId ? "dice-group__roll-btn--disabled" : ""}`}
+            disabled={activePlayer !== yourId}
+          >
             Roll the Dice
           </button>
         )}
         {rollDisabled && diceResult.total && (
           <div className="dice-group__result">
-            {activePlayer === 0 ? `You rolled a ${diceResult.total}` : `The guide rolled a ${diceResult.total}`}
+            {activePlayer === yourId
+              ? `You rolled a ${diceResult.total}`
+              : `${gameSetup.players[activePlayer]} rolled a ${diceResult.total}`}
           </div>
         )}
       </div>

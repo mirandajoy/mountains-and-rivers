@@ -1,0 +1,16 @@
+@use "../../styles/variables" as *;
+
+.instructions {
+  &__header {
+    font-size: 2.75rem;
+    font-weight: 400;
+    line-height: 3.75rem;
+    padding-bottom: 1.25rem;
+  }
+  &__body {
+    font-size: 1.25rem;
+    line-height: 2rem;
+    margin-block: 0.25rem;
+    padding-left: 0.125rem;
+  }
+}

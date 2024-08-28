@@ -6,8 +6,11 @@ interface Token {
   color: string[];
 }
 
-function PlayerList({ players, activePlayer }: { players: string[]; activePlayer: number }) {
-  const tokens: Token = { shape: ["eco", "spa"], color: ["option-1", "option-2"] };
+function PlayerList({ players, activePlayer, yourId }: { players: string[]; activePlayer: number; yourId: number }) {
+  const tokens: Token = {
+    shape: ["eco", "spa", "psychiatry", "potted_plant"],
+    color: ["option-1", "option-2", "option-3", "option-4"],
+  };
 
   return (
     <div className="players">
@@ -23,7 +26,7 @@ function PlayerList({ players, activePlayer }: { players: string[]; activePlayer
               </div>
               {activePlayer === i && (
                 <span className={`players__active-tag players__active-tag--${tokens.color[i]}`}>
-                  {i === 0 ? "Your Turn" : `${player}'s turn`}
+                  {i === yourId ? "Your Turn" : `${player}'s turn`}
                 </span>
               )}
             </li>

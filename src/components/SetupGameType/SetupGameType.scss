@@ -1,0 +1,61 @@
+@use "../../styles/variables" as *;
+
+.game-type {
+  max-width: 1000px;
+}
+
+.create-game {
+  border: none;
+  margin-bottom: 4rem;
+  &__label {
+    padding-bottom: 0.75rem;
+  }
+  &__options-container {
+    display: flex;
+    gap: 0.5rem;
+  }
+  &__option-container {
+    flex-grow: 1;
+  }
+  &__option-input {
+    display: none;
+    &:checked + .create-game__option-label {
+      background-color: rgba(white, 0.2);
+      border: 1px solid white;
+      color: white;
+    }
+  }
+  &__option-label {
+    border: 1px solid white;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    display: block;
+    padding: 0.75rem 1rem;
+    text-align: center;
+    &:hover {
+      background-color: rgba(white, 0.2);
+    }
+  }
+}
+
+.join-game {
+  align-items: flex-end;
+  display: flex;
+  flex-grow: 1;
+  gap: 0.5rem;
+  min-width: 20rem;
+  max-width: 50%;
+  &__input-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  &__label {
+    padding-bottom: 0.5rem;
+  }
+  &__input {
+    font-size: 1rem;
+    padding: 0.75rem 1rem;
+  }
+}

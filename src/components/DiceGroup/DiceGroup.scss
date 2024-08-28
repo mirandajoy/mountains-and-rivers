@@ -14,6 +14,12 @@
   }
   &__roll-btn {
     width: 100%;
+    &--disabled {
+      background-color: grey;
+      &:hover {
+        background-color: grey;
+      }
+    }
   }
   &__result {
     font-weight: 700;

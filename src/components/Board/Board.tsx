@@ -1,12 +1,16 @@
-import "./Board.scss";
+import riverTestM from "../../assets/river-test-m.png";
+import riverTest from "../../assets/river-test.png";
+import mountainL from "../../assets/simple-mountain-l.svg";
+import mountainM from "../../assets/simple-mountain-m.svg";
+import mountainS from "../../assets/simple-mountain-s.svg";
+import riverL from "../../assets/simple-river-l.svg";
+import riverM from "../../assets/simple-river-m.svg";
+import riverS from "../../assets/simple-river-s.svg";
+import mountainSR from "../../assets/mountain-s-right.png";
 import { ladderDetails } from "../../utils/calcLadderPos.ts";
 import { snakeDetails } from "../../utils/calcSnakePos.ts";
-import riverS from "../../assets/simple-river-s.svg";
-import riverM from "../../assets/simple-river-m.svg";
-import riverL from "../../assets/simple-river-l.svg";
-import mountainS from "../../assets/simple-mountain-s.svg";
-import mountainM from "../../assets/simple-mountain-m.svg";
-import mountainL from "../../assets/simple-mountain-l.svg";
+
+import "./Board.scss";
 
 interface PlayerPosition {
   [key: number]: number;
@@ -40,6 +44,16 @@ function Board({ boardPosition }: { boardPosition: PlayerPosition }) {
                 <span className="material-symbols-outlined board__token">spa</span>
               </div>
             )}
+            {boardPosition[2] && boardPosition[2] === sq && (
+              <div className="board__token-container board__token-container--option-3">
+                <span className="material-symbols-outlined board__token">psychiatry</span>
+              </div>
+            )}
+            {boardPosition[3] && boardPosition[3] === sq && (
+              <div className="board__token-container board__token-container--option-4">
+                <span className="material-symbols-outlined board__token">potted_plant</span>
+              </div>
+            )}
           </div>
         );
       })}
@@ -47,11 +61,11 @@ function Board({ boardPosition }: { boardPosition: PlayerPosition }) {
         const transformStyle = `rotate(-${l.angle}rad)`;
         const img = () => {
           if (l.hypot < 12) {
-            return mountainS;
+            return mountainSR;
           } else if (l.hypot < 25) {
-            return mountainM;
+            return mountainSR;
           } else {
-            return mountainL;
+            return mountainSR;
           }
         };
         return (
@@ -72,11 +86,11 @@ function Board({ boardPosition }: { boardPosition: PlayerPosition }) {
         const transformStyle = `rotate(-${s.angle}rad)`;
         const img = () => {
           if (s.hypot < 12) {
-            return riverS;
+            return riverTest;
           } else if (s.hypot < 25) {
-            return riverM;
+            return riverTestM;
           } else {
-            return riverL;
+            return riverTestM;
           }
         };
         return (
@@ -87,7 +101,7 @@ function Board({ boardPosition }: { boardPosition: PlayerPosition }) {
             style={{
               left: `calc(4.5rem * ${s.start.x} + 2.25rem)`,
               bottom: `calc(4.5rem * ${s.start.y} + 2.25rem)`,
-              width: `calc(${s.hypot}rem)`,
+              width: `calc(${s.hypot}rem + 1rem)`,
               transform: transformStyle,
             }}
           />
